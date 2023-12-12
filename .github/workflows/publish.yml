@@ -30,5 +30,5 @@ jobs:
           npm-token: ${{ secrets.NPM_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           create-github-release: true
-          publish-command: "pnpm test --publish-branch '${{ github.ref_name }}' --no-git-checks"
+          publish-command: "pnpm publish-test --publish-branch '${{ github.ref_name }}' --no-git-checks"
           package-json-directory: contracts
