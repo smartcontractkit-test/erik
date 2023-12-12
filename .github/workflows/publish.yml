@@ -1,0 +1,34 @@
+name: Publish to NPM
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    environment: publish
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Setup Node
+        uses: smartcontractkit/.github/actions/setup-nodejs@8fa1512e1e46ec4b9269563dcc6e1a560692d950 # setup-nodejs@0.2.0
+        with:
+          package-json-directory: contracts
+          pnpm-version: ^8.0.0
+          use-cache: true
+          run-install: true
+          node-version-file: contracts/.tool-versions
+
+      - name: Publish to NPM
+        uses: smartcontractkit/.github/actions/ci-publish-npm@4e934ced130f447eaf325d1d610c440517eb93e9 # ci-publish-npm@0.2.0
+        with:
+          npm-token: ${{ secrets.NPM_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          create-github-release: true
+          publish-command: "pnpm test --publish-branch '${{ github.ref_name }}' --no-git-checks"
+          package-json-directory: contracts
