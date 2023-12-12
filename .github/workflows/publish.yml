@@ -28,11 +28,12 @@ jobs:
         working-directory: contracts
         id: compare-versions
         run: |
-            if [ "v$(cat package.json | jq -r '.version')" = "${{ github.ref_name }}" ]; then
-              echo "matches=true" >> $GITHUB_OUTPUT
-            else
-              echo "matches=false" >> $GITHUB_OUTPUT
-            fi
+          PACKAGE_JSON_VERSION="v$(cat package.json | jq -r '.version')"
+          if [ "$PACKAGE_JSON_VERSION" = "${{ github.ref_name }}" ]; then
+            echo "matches=true" >> $GITHUB_OUTPUT
+          else
+            echo "matches=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Publish to NPM
         uses: smartcontractkit/.github/actions/ci-publish-npm@4e934ced130f447eaf325d1d610c440517eb93e9 # ci-publish-npm@0.2.0
