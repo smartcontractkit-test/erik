@@ -1,18 +1,18 @@
 {
   "name": "@erik/test-npm",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "test npm workflow",
   "author": "erik",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "compile": "./scripts/native_solc_compile_all",
-    "publish-test": "./scripts/echo-test.sh",
-    "publish-beta": "pnpm publish --tag beta",
-    "publish-prod": "npm dist-tag add @erik/test-npm@1.0.2 latest"
+    "compile": "./scripts/native_solc_compile_all"
   },
   "files": [
     "src/",
     "abi/"
-  ]
+  ],
+  "dependencies": {
+    "@pnpm/registry-mock": "^3.16.0"
+  }
 }

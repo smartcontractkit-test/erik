@@ -30,10 +30,5 @@ jobs:
           npm-token: ${{ secrets.FAKE_NPM_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           create-github-release: true
-          publish-command: "pnpm publish-test --publish-branch '${{ github.ref_name }}' --no-git-checks"
+          publish-command: "pnpm publish --dry-run --publish-branch=main --no-git-checks"
           package-json-directory: contracts
-
-      - name: Test validation
-        run: |
-          echo ${{ secrets.FAKE_NPM_TOKEN }}
-          cat ~/.npmrc
