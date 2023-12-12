@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    environment: publish
+    environment: publish_test
     permissions:
       contents: write
     steps:
@@ -27,8 +27,13 @@ jobs:
       - name: Publish to NPM
         uses: smartcontractkit/.github/actions/ci-publish-npm@4e934ced130f447eaf325d1d610c440517eb93e9 # ci-publish-npm@0.2.0
         with:
-          npm-token: ${{ secrets.NPM_TOKEN }}
+          npm-token: ${{ secrets.FAKE_NPM_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           create-github-release: true
           publish-command: "pnpm publish-test --publish-branch '${{ github.ref_name }}' --no-git-checks"
           package-json-directory: contracts
+
+      - name: Test validation
+        run: |
+          echo ${{ secrets.FAKE_NPM_TOKEN }}
+          cat ~/.npmrc
